@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=0.95, user-scalable=no" />
+	<title>黄山醉温泉 - 会员中心</title>
+	<meta name="description" content="说明" />
+	<meta name="keywords" content="关键字" />
+	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css">
+	<link rel="stylesheet" href="../css/user.css" type="text/css" />
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../layui/layui.js"></script>
+	<script type="text/javascript" src="../js/user.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/dateTime.js"></script>
+	<script type="text/javascript">
+		if (localStorage.getItem("id") == null) {
+			window.location.href = "../passport/login.html";
+		}
+	</script>
+</head>
+
+<body>
+<!--头-->
+<iframe src="user-top.html" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+<!--头-->
+
+<!--会员中心-->
+<div class="member_center_wrap">
+	<div class="member_center clearfix">
+		<div class="member_center_l" style="float: left;">
+			<div class="body_center_main_tree">
+				<ul>
+					<li>
+						<dl>
+							<dt><a href="#" class="cur">会员信息</a></dt>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">订单管理</a></dt>
+							<dd><a href="user-order.html">门店支付订单</a>
+								<a href="user-order.html">在线支付订单</a>
+								<a href="user-order.html">历史酒店订单</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">会员卡管理</a></dt>
+							<dd><a href="#">已买到的会员卡</a>
+								<a href="#">未支付的会员卡</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">套餐卡管理</a></dt>
+							<dd><a href="#">已买到的套餐卡</a>
+								<a href="#">未支付的套餐卡</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">站内消息</a></dt>
+							<dd><a href="#">站内公告</a>
+								<a href="#">会员消息</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">消息管理</a></dt>
+							<dd><a href="#">个人资料管理</a>
+								<a href="#">会员卡管理</a>
+								<a href="#">常用联系人</a>
+								<a href="user-changepass.html">修改密码</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">瑞琪酒店社区</a></dt>
+							<dd><a href="#">会员公告</a>
+								<a href="#">会员分享</a>
+								<a href="#">会员建议</a>
+								<a href="#">会员投诉</a>
+								<a href="#">公司会员手册</a>
+								<a href="#">个人会员手册</a>
+							</dd>
+						</dl>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<div class="member_center_r">
+			<div class="center_main1">
+				<div class="center_main_tab1">
+					<span>会员信息</span>
+				</div>
+
+				<div class="form_list">
+					<ul>
+						<li class="clearfix">
+							<span class="s1">订单号:</span>
+							<span class="s2" id="oId"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">下单时间:</span>
+							<span class="s2" id="oTime"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">总价:</span>
+							<span class="s2" id="totalPrice"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">总间数:</span>
+							<span class="s2" id="totalNum"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">入住时间:</span>
+							<span class="s2" id="inDate"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">离店时间:</span>
+							<span class="s2" id="outDate"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">入住人:</span>
+							<span class="s2" id="uname"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">手机号:</span>
+							<span class="s2" id="phone"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">身份证号:</span>
+							<span class="s2" id="idcardnum"></span>
+						</li>
+						<li class="clearfix">
+							<span class="s1">房间号:</span>
+							<span class="s2" id="rId"></span>
+						</li>
+					</ul>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<!---尾部-->
+<div class="footer">
+	<div class="link">
+		<div class="copyright">
+			Copyright &copy; 2013 eastreach Co.,Ltd All Rights Reserved. 版权所有&nbsp;&nbsp;阜阳天筑豪生大酒店&nbsp;&nbsp;湘ICP备0000000
+		</div>
+	</div>
+
+</div>
+<script type="text/javascript">
+	layui.use(['jquery', 'form'], function() {
+		var $ = layui.$;
+		var form = layui.form;
+		var id = localStorage.getItem("id");
+		var url = window.location.search; //获取url中"?"符后的字串
+		var token = localStorage.getItem("token");
+
+
+
+		if (url.indexOf("?") != -1) {
+			var oId = url.substr(url.indexOf("=") + 1);
+			$.ajax({
+				headers: {
+					"Authorization": token
+				},
+				url: "http://localhost:8080/api/order/order",
+				type: "get",
+				data: {
+					"oId": oId
+				},
+				success: function(result) {
+					var rId = "";
+					if (result.meta.success) {
+						$('#oId').html(result.data.order.oId);
+						$('#oTime').html(dateFormat("YYYY-mm-dd HH:MM:SS",new Date(result.data.order.oTime)));
+						$('#totalPrice').html('￥ ' + result.data.order.totalPrice);
+						$('#totalNum').html(result.data.order.totalNum);
+						$('#inDate').html(dateFormat("YYYY-mm-dd",new Date(result.data.order.inDate)));
+						$('#outDate').html(dateFormat("YYYY-mm-dd",new Date(result.data.order.outDate)));
+						$('#uname').html(result.data.order.uname);
+						$('#phone').html(result.data.order.phone);
+						$('#idcardnum').html(result.data.order.idcardnum);
+						$.each(result.data.orderItems, function(index, item) {
+							rId += item.rId + "  ,  ";
+						})
+						$('#rId').html(rId);
+					} else {
+						layer.msg(result.meta.message, {
+							icon: 5
+						})
+					}
+				}
+			})
+		} else {
+			window.location.href="user-order.html";
+		}
+
+	})
+</script>
+</body>
+</html>

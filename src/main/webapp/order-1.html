@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=0.95, user-scalable=no" />
+		<title>黄山醉温泉</title>
+		<link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+		<link href="css/base.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="layui/layui.js"></script>
+
+	</head>
+
+	<body>
+		<!--HEADER-->
+		<iframe src="top.html" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+		<!--HEADER-->
+
+		<!--BIG PIC-->
+		<div class="banners">
+			&nbsp;
+		</div>
+		<!--BIG PIC-->
+
+		<!--CONTENT-->
+		<div class="content">
+			<div class="mar1000 clearfix">
+				<div class="path"><label>酒店预订</label><span>当前位置：首页 &gt; 酒店预订</span></div>
+
+				<!--订单确认页面-->
+				<div style="background:#fff; border:1px solid #eee; padding:30px;">
+					<!--订单页面-->
+
+					<div class="orderForm">
+						<!--进度-->
+						<div class="step clearfix" id="step2">
+							<span>当前：<i>确认订单</i></span>
+							<em class="s1"></em>
+							<em class="s2">50%</em>
+							<em class="s3"></em>
+							<em class="s4">距离完成还有2步</em>
+						</div>
+
+						<div class="orderForm_tab clearfix">
+							<span><b>确认订单</b></span><em><a href="javascript:">[修改订单信息]</a></em>
+						</div>
+						<div class="orderForm_table">
+							<table width="100%" class="table1" border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td class="td1">预订房型：</td>
+									<td class="td2"><i id="tName">精选大床房</i></td>
+									<td class="td3">入住日期：</td>
+									<td class="td4" id="inDate">2014-01-13</td>
+								</tr>
+								<tr>
+									<td class="td1">房 间 数：</td>
+									<td class="td2" id="totalNum">2 间</td>
+									<td class="td3">离店日期：</td>
+									<td class="td4" id="outDate">2014-01-14</td>
+								</tr>
+							</table>
+						</div>
+
+						<div class="orderForm_tab clearfix">
+							<span><b>入住人信息</b><i></i></span><em></em>
+						</div>
+						<form action="" class="layui-form" method="post" lay-filter="order-form">
+							<div class="orderForm_frm1 clearfix">
+								<span class="s1"><i>入住人姓名</i>
+									<input name="uname" type="text" lay-verify="required" class="order_ipt" />
+								</span>
+								<span class="s2"><i>身份证号码</i>
+									<input name="idcardnum" type="text" lay-verify="required|identity" class="order_ipt" />
+								</span>
+								<span class="s3"><i>手机号码</i>
+									<input name="phone" type="text" lay-verify="required|phone" class="order_ipt" />
+								</span>
+								<!-- <span class="s4"><i>电子邮箱</i><input name="" type="text" class="order_ipt" /></span> -->
+							</div>
+
+							<div class="orderForm_tab clearfix">
+								<span><tt>请务必完善您的会员个人资料，以避免您的的入住积分不能正常获取。 <a href="user/user-center.html">[点击完善]</a></tt></span><em></em>
+							</div>
+
+							<div class="orderForm_table1">
+								<table width="100%" class="table2" border="0" cellspacing="0" cellpadding="0">
+
+									<tr class="tr3">
+										<td colspan="7">您选择了<i class="i1" id="num"></i>间，总金额：<i class="i2" id="price">258.00</i>元， 房费优惠后价格 <i class="i3"
+											 id="totalPrice">258.00</i>元</td>
+									</tr>
+								</table>
+
+							</div>
+
+							<!--选择支付方式-->
+							<div class="orderForm_tab1" style="margin:20px 0 0 ;"><span>请选择支付方式</span></div>
+							<div class="choose_pay">
+								<div class="frmM">
+									<div class="p1x">
+										<input type="radio" name="pay" value="0" title="在线预付首夜房费  房间保留到预订入住日第二天中午12:00，为缩短办理入住时的等待时间，建议在线预付房费" id="payment_0" />
+									</div>
+									<div class="p1x">
+										<input type="radio" name="pay" value="1" title="门店支付  订单保留到入住当天18点，如需入住更有保障，请选择在线预付，房间整晚保留。" id="payment_1" />
+									</div>
+								</div>
+							</div>
+
+							<div class="btn_area_1">
+								<button type="button" onclick="location.href='room-userInfo.html'" class="order_btn2" style="margin-right:20px;"></button>
+								<button class="order_btn3" lay-submit="" lay-filter="sub"></button>
+							</div>
+						</form>
+					</div>
+
+
+
+				</div>
+			</div>
+		</div>
+		<!--CONTENT-->
+
+		<!--FOOTER-->
+		<iframe src="footer.html" width="100%" height="232px" frameborder="0" scrolling="no"></iframe>
+		<!--FOOTER-->
+		<script type="text/javascript">
+			layui.use(['jquery', 'form'], function() {
+				var $ = layui.$;
+				var form = layui.form;
+
+				if (localStorage.getItem("id") == null) {
+					window.location.href = "passport/login.html";
+				}
+				var totalNum = localStorage.getItem("totalNum");
+				var uname = localStorage.getItem("uname");
+				var phone = localStorage.getItem("phone");
+				var idcardnum = localStorage.getItem("idcardnum");
+				var inDate = localStorage.getItem("inDate");
+				var outDate = localStorage.getItem("outDate");
+				var tName = localStorage.getItem("tName");
+				var id = localStorage.getItem("id");
+				var price = localStorage.getItem("price");
+				var room = JSON.parse(localStorage.getItem("room"));
+				var token = localStorage.getItem("token");
+
+				$('#tName').html(tName);
+				$('#inDate').html(inDate);
+				$('#outDate').html(outDate);
+				$('#totalNum').html(totalNum + "  间");
+				$('#num').html(totalNum);
+				$('#price').html(price * totalNum * 1.5);
+				$('#totalPrice').html(price * totalNum);
+
+				form.val("order-form", { //formTest 即 class="layui-form" 所在元素属性 lay-filter="" 对应的值
+					"uname": uname // "name": "value"
+						,
+					"idcardnum": idcardnum,
+					"phone": phone
+				});
+
+				var roomIds = [];
+				$.each(room, function(index, item) {
+					if (index < totalNum) {
+						roomIds.push(item.rId);
+					}
+				});
+
+				form.on('submit(sub)', function(data) {
+					if (!($('#payment_0')[0].checked || $('#payment_1')[0].checked)) {
+						layer.msg("请选择支付方式", {
+							icon: 5
+						});
+						return false;
+					}
+					var oId = "E" + id + (new Date()).getTime();
+					$.ajax({
+						headers: {
+							"Authorization": token
+						},
+						url: "http://localhost:8080/api/order/order",
+						type: "post",
+						traditional: true,
+						data: {
+							"oId": oId,
+							"totalPrice": totalNum * price,
+							"totalNum": totalNum,
+							"inDate": inDate,
+							"outDate": outDate,
+							"uname": uname,
+							"phone": phone,
+							"idcardnum": idcardnum,
+							"id": id,
+							"rTds": roomIds
+						},
+						success: function(result) {
+							if (result.meta.success) {
+								layer.msg("预订成功", {
+									icon: 1,
+									time: 2000,
+									end: function() {
+										window.location.href = "order-2.html?oId=" + oId;
+									},
+								})
+							} else {
+								layer.msg(result.meta.message, {
+									icon: 5
+								})
+							}
+						}
+					});
+
+					return false;
+				})
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=0.95, user-scalable=no"/>
+  <title>黄山醉温泉</title>
+  <link rel="stylesheet" type="text/css" href="layui/css/layui.css">
+  <link rel="stylesheet" type="text/css" href="css/base.css">
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="layui/layui.js"></script>
+</head>
+
+<body>
+<!--HEADER-->
+<iframe src="top.html" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+<!--HEADER-->
+
+<!--BIG PIC-->
+<div class="banners">
+  &nbsp;
+</div>
+<!--BIG PIC-->
+
+
+<!--CONTENT-->
+<div class="content">
+  <div class="mar1000 clearfix">
+
+    <div class="lefts">
+      <div class="tree">
+        <label>促销活动</label>
+        <a href="" class="hover">促销活动</a>
+        <a href="">促销活动</a>
+        <a href="">促销活动</a>
+      </div>
+    </div>
+    <div class="rights">
+
+      <div class="path path_nomar"><label>酒店预订</label><span>当前位置：首页 &gt; 酒店预订</span></div>
+
+      <!--查询功能-->
+      <form class="layui-form" action="http://localhost:8080/api/room/all" method="get">
+        <div class="search">入住日期：
+          <input type="text" class="input01s" id="indate">&nbsp;&nbsp;退房日期：
+          <input type="text" class="input01s" id="outdate">&nbsp;&nbsp;
+          <button lay-submit="" lay-filter="search" class="btn01s">开始查询</button>
+        </div>
+      </form>
+      <!--查询功能-->
+
+      <!--客房预订-->
+      <div class="home_list" id="home_list">
+
+        <!--单元-->
+        <!--<div class="dd_list">
+    <h3 id="name"></h3>
+    <p id="describe"></p>
+    <div class="dd_list_h">
+        <img src="" id="picture" width="180" height="118"/>
+        <div class="dd_list_house">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="table01">
+                <tr class="p">
+                    <td width="41%">价格名称</td>
+                    <td width="15%">平均房价</td>
+                    <td width="15%">早餐</td>
+                    <td width="15%">支付方式</td>
+                    <td width="14%">&nbsp;</td>
+                </tr>
+                <tr class="o">
+                    <td>至尊商务大/双床房+天一门票2</td>
+                    <td>¥ 898</td>
+                    <td>双早</td>
+                    <td>前台现付</td>
+                    <td><a href="" class="yd">预订</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="clears"></div>
+    </div>
+</div>-->
+
+      </div>
+      <!--            <div class="page">翻页代码</div>-->
+
+    </div>
+  </div>
+</div>
+<!--CONTENT-->
+
+<!--FOOTER-->
+<iframe src="footer.html" width="100%" height="232px" frameborder="0" scrolling="no"></iframe>
+<!--FOOTER-->
+
+<script type="text/javascript">
+  layui.use(['jquery', 'form', 'laydate'], function () {
+    const $ = layui.$;
+    const form = layui.form;
+    const laydate = layui.laydate;
+
+    const time = new Date();
+    const day = ('0' + time.getDate()).slice(-2);
+    const month = ('0' + (time.getMonth() + 1)).slice(-2);
+    let inDate = time.getFullYear() + '-' + month + '-' + day;
+    let outDate = time.getFullYear() + '-' + month + '-' + ('0' + (time.getDate() + 1)).slice(-2);
+    const url = window.location.search;
+
+    localStorage.setItem("inDate", inDate);
+    localStorage.setItem("outDate", outDate);
+
+    //执行一个laydate实例
+    laydate.render({
+      elem: '#indate', //指定元素
+      value: inDate,
+      min: 0,
+      max: 30,
+      done: function (value, date, endDate) {
+        inDate = value;
+        localStorage.setItem("inDate", inDate);
+      }
+    });
+
+    laydate.render({
+      elem: '#outdate', //指定元素
+      value: outDate,
+      min: 1,
+      max: 30,
+      done: function (value, date, endDate) {
+        outDate = value;
+        localStorage.setItem("outDate", outDate);
+      }
+    });
+
+    function dateInput(inDate, outDate) {
+      //执行一个laydate实例
+      laydate.render({
+        elem: '#indate', //指定元素
+        value: inDate,
+        min: 0,
+        max: 30,
+        done: function (value, date, endDate) {
+          inDate = value;
+          localStorage.setItem("inDate", inDate);
+        }
+      });
+
+      laydate.render({
+        elem: '#outdate', //指定元素
+        value: outDate,
+        min: 1,
+        max: 30,
+        done: function (value, date, endDate) {
+          outDate = value;
+          localStorage.setItem("outDate", outDate);
+        }
+      });
+    }
+
+    function serchRoom(inDate) {
+      $.ajax({
+        url: "http://localhost:8080/api/room/all",
+        type: "get",
+        data: {
+          "inDate": inDate
+        },
+        success: function (result) {
+          if (result.meta.success) {
+            localStorage.setItem("rooms", JSON.stringify(result.data.rooms));
+            localStorage.setItem("roomTypes", JSON.stringify(result.data.roomType));
+
+            if (result.data.roomType.length > 0) {
+              let html = "";
+              $.each(result.data.roomType, function (index, item) {
+                /*html += "<div class=\"dd_list\">\n" +
+                  "<h3 >" + item.tName + "</h3>\n" +
+                  "<p >" + item.describe + "</p>\n" +
+                  "<div class=\"dd_list_h\">\n" +
+                  "<img src=\"http://localhost:8080" + item.picture + "\"  width=\"180\" height=\"118\"/>\n" +
+                  "<div class=\"dd_list_house\">\n" +
+                  "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"table01\">\n" +
+                  "<tr class=\"p\">\n" +
+                  "<td width=\"41%\">价格名称</td>\n" +
+                  "<td width=\"15%\">平均房价</td>\n" +
+                  "<td width=\"15%\">支付方式</td>\n" +
+                  "<td width=\"14%\">&nbsp;</td>\n" +
+                  "</tr>\n" +
+                  "<tr class=\"o\">\n" +
+                  "<td>" + item.tName + "</td>\n" +
+                  "<td>" + item.price + "</td>\n" +
+                  "<td>前台现付</td>\n" +
+                  "<td><a href=\"room-userInfo.html?type=" + item.tId + "\" class=\"yd\">预订</a></td>\n" +
+                  "</tr>\n" +
+                  "</table>\n" +
+                  "</div>\n" +
+                  "<div class=\"clears\"></div>\n" +
+                  "</div>\n" +
+                  "</div>";*/
+                  html += `<div class=\"dd_list\">
+                      <h3 >item.tName</h3>
+                      <p >" + item.describe + "</p>
+                      <div class=\"dd_list_h\">
+                      <img src=\"http://localhost:8080" + item.picture + "\"  width=\"180\" height=\"118\"/>
+                      <div class=\"dd_list_house\">
+                      <table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"table01\">
+                      <tr class="p">
+                      <td width="41%">价格名称</td>
+                      <td width="15%">平均房价</td>
+                      <td width="15%">支付方式</td>
+                      <td width="14%">&nbsp;</td>
+                      </tr>
+                      <tr class="o">
+                      <td>item.tName</td>
+                      <td>item.price</td>
+                      <td>前台现付</td>
+                      <td><a href="room-userInfo.html?type=" + item.tId  class="yd">预订</a></td>
+                      </tr>
+                      </table>
+                      </div>
+                      <div class="clears"></div>
+                      </div>
+                      </div>`
+              });
+              $('#home_list').empty().append(html);
+            }
+          }
+        }
+
+      });
+    }
+
+    /**
+     * @return {string}
+     */
+    function GetQueryString(name) {
+      let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      let r = window.location.search.substr(1).match(reg); //获取url中"?"符后的字符串并正则匹配
+      let context = "";
+      if (r != null)
+        context = r[2];
+      reg = null;
+      r = null;
+      return context == null || context == "" || context == "undefined" ? "" : context;
+    }
+
+    if (url.indexOf("?") !== -1) {
+      const dateStr = url.substr(url.indexOf("=") + 1);
+      if (dateStr.length > 0) {
+        const in_date = GetQueryString("in_date");
+        const out_date = GetQueryString("out_date");
+
+        dateInput(in_date, out_date);
+        serchRoom(in_date);
+      } else {
+        $('#home_list').empty().append("没有查询到数据");
+      }
+
+    } else {
+      dateInput(inDate, outDate);
+      serchRoom(inDate);
+    }
+
+    //监听提交
+    form.on('submit(search)', function (data) {
+      if (outDate <= inDate) {
+        layer.msg("日期选择有误", {
+          icon: 5
+        });
+        return false;
+      }
+      window.location.href = "room-search.html?in_date=" + inDate + "&out_date=" + outDate;
+      return false; //注释掉这行代码后，表单将会以普通方式提交表单，否则以ajax方式提交表单
+    });
+  });
+</script>
+</body>
+</html>

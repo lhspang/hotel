@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="css/base.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="js/jquery.js"></script>
+	</head>
+	<body>
+
+		<div class="header">
+			<div class="mar1000 clearfix">
+				<div class="logo"></div>
+				<div class="header_right">
+					<div class="homeinfo">
+						<label><span>免费预订电话：<strong>400-0559-700</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;|</label>
+						<label id="lr"></label>
+						<label><a href="#">设为首页</a></label>
+					</div>
+					<div class="nav">
+						<a href="index.html" target="_top" class="hover">首 页</a>
+						<a href="#">温泉预定</a>
+						<a href="room-search.html" target="_top">酒店预定</a>
+						<a href="#">醉悦旅居</a>
+						<a href="#">养生餐饮</a>
+						<a href="#">会议中心</a>
+						<a href="#">促销活动</a>
+						<a href="#">企业文化</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				function login() {
+					$('#lr').html("<a href=\"passport/login.html\" target=\"_top\">会员登录</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+						"<a href=\"passport/register.html\" target=\"_top\">注册</a>&nbsp;&nbsp;&nbsp;&nbsp;|")
+				}
+
+				function user() {
+					$('#lr').html("<a href=\"user/user-center.html\" target=\"_top\">会员中心</a>&nbsp;&nbsp;&nbsp;&nbsp;" +
+						"<a id='quit' href=\"javascript:void(0)\" target=\"_top\">安全退出</a>&nbsp;&nbsp;&nbsp;&nbsp;|")
+				}
+
+				var token = localStorage.getItem("token");
+				if (token == null) {
+					login();
+				} else {
+					$.ajax({
+						url: "http://localhost:8080/api/code/token",
+						data: {
+							"token": token
+						},
+						type: "get",
+						async: false,
+						success: function(result) {
+							if (result.meta.success) {
+								user();
+							} else {
+								login();
+								localStorage.clear();
+							}
+						}
+					});
+				}
+
+				$('#quit').click(function() {
+					localStorage.clear();
+					top.location.reload();
+				});
+			});
+		</script>
+	</body>
+</html>

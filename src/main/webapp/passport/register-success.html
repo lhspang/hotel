@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=0.95, user-scalable=no" />
+		<title>新用户注册</title>
+		<meta name="description" content="说明" />
+		<meta name="keywords" content="关键字" />
+		<link rel="stylesheet" href="../css/login.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css">
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/base.js"></script>
+		<script type="text/javascript" src="../layui/layui.js"></script>
+	</head>
+
+	<body>
+		<!--HEADER-->
+		<iframe src="../top.html" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+		<!--HEADER-->
+
+		<!--身-->
+		<div class="container_wrap">
+			<div class="container clearfix">
+				<!--左-->
+				<div class="container_l">
+					<h1>注册成功</h1>
+					<div class="prompt_frame">
+						<em id="nickName"></em>
+						<p>　　由安徽天筑集团与豪生酒店管理集团合力打造的阜城首家五星级酒店——阜阳天筑豪生大酒店，便坐落在颍水河畔，自此终于填补了阜阳没有五星级标准大酒店的空白，并为这座城市增添了更多的魅力。</p>
+						<div class="btn_area">
+							<a href="../user/user-center.html" class="btn3">会员中心</a>
+							<a href="../room-search.html" class="btn3">客房预订</a></div>
+					</div>
+
+
+				</div>
+				<!--右-->
+				<div class="container_r">
+					<div class="ishave">
+						<p>已经有帐号？请直接登录</p>
+						<p class="p1"><a href="login.html" class="btn1">立即登录</a></p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!--尾部-->
+		<div class="footer">
+			Copyright &copy; 2014 黄山 &middot; 醉温泉 All Rights Reserved. 版权所有&nbsp;&nbsp;&nbsp;&nbsp;皖ICP备11009137号
+		</div>
+		<script type="text/javascript">
+			layui.use(['jquery', 'form'], function() {
+				var $ = layui.$;
+				var form = layui.form;
+
+				$(document).ready(function() {
+					var url = decodeURI(window.location.search); //获取url中"?"符后的字串
+					var nickName;
+					if (url.indexOf("?") != -1) {
+						nickName = url.substr(url.indexOf("=") + 1);
+					}
+
+					$('#nickName').html("Hi，" + nickName + "，欢迎您成为黄山 &middot; 醉温泉会员！");
+				});
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=0.95, user-scalable=no" />
+		<title>新用户注册</title>
+		<meta name="description" content="说明" />
+		<meta name="keywords" content="关键字" />
+		<link rel="stylesheet" href="../css/login.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css">
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/base.js"></script>
+		<script type="text/javascript" src="../layui/layui.js"></script>
+		<script type="text/javascript" src="../js/phoneCode.js"></script>
+		<script type="text/javascript" src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+		<script type="text/javascript" src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	</head>
+
+	<body>
+		<!--HEADER-->
+		<iframe src="../top.html" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+		<!--HEADER-->
+
+		<!--身-->
+		<div class="container_wrap">
+			<div class="container clearfix">
+				<!--左-->
+				<div class="container_l">
+					<h1>新用户注册</h1>
+					<div class="form_list">
+						<form class="layui-form" action="http://localhost:8080/api/user/register" method="post">
+							<ul>
+								<li class="clearfix">
+									<span class="s1">电子邮箱:</span>
+									<span class="s2">
+										<input type="text" id="email" name="email" lay-verify="required|email" class="valid_ipt" placeholder="请填写正确的常用邮箱，以便找回密码" />
+									</span>
+									<span class="s3"><i class="red">*</i> 用于接收密码、订单确认、接收特惠信息。</span>
+								</li>
+								<li class="clearfix">
+									<span class="s1">手机号码:</span>
+									<span class="s2"><input type="text" id="phone" name="phone" lay-verify="required|phone" class="valid_ipt"
+										 placeholder="请提供正确的手机号码" />
+									</span>
+									<span class="s3"><i class="red">*</i> 用于接收密码、订单确认、会员登录。</span>
+								</li>
+								<li class="clearfix">
+									<span class="s1">验证码:</span>
+									<span class="s2">
+										<input type="text" id="phoneCode" lay-verify="required" class="valid_ipt ipt_short" placeholder="输入验证码" />
+										<div class="yzm_store">
+											<button type="button" class="layui-btn layui-btn-primary" id="codebtn" value="1">获取验证码</button>
+										</div>
+									</span>
+									<span class="s3"></span>
+								</li>
+								<li class="clearfix">
+									<span class="s1">昵称:</span>
+									<span class="s2">
+										<input type="text" id="nickName" name="nickName" lay-verify="required|nickName" class="valid_ipt"
+										 placeholder="支持中文，不能以数字开头，4-20个字符" />
+									</span>
+								</li>
+								<li class="clearfix">
+									<span class="s1">密码:</span>
+									<span class="s2">
+										<input id="password" type="password" name="password" lay-verify="required|pass" class="valid_ipt"
+										 placeholder="密码为数字、英文字母或者符号" />
+									</span>
+								</li>
+								<li class="clearfix">
+									<span class="s1">确认密码:</span>
+									<span class="s2">
+										<input id="repassword" type="password" lay-verify="required|repass" class="valid_ipt"
+										 placeholder="请重复输入密码" />
+									</span>
+								</li>
+							</ul>
+							<div class="yes_rule">
+								<input id="yes_rule" name="" lay-verify="check" lay-skin="primary" type="checkbox" title="我已看过并同意" />
+								<label style="float: right;margin-right: 160px" for="yes_rule"><a href="#">黄山&middot;
+										醉温泉会员《注册服务条款》</a></label>
+							</div>
+							<div class="btn_area">
+								<input type="text" id="hidd" value="0" hidden="hidden" />
+								<button id="sub_btn" lay-submit="" lay-filter="zhuce" class="btn2">轻松注册</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--右-->
+				<div class="container_r">
+					<div class="ishave">
+						<p>已经有帐号？请直接登录</p>
+						<p class="p1"><a href="login.html" class="btn1">立即登录</a></p>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!--尾部-->
+		<div class="footer">
+			Copyright &copy; 2014 黄山 &middot; 醉温泉 All Rights Reserved. 版权所有&nbsp;&nbsp;&nbsp;&nbsp;皖ICP备11009137号
+		</div>
+
+		<script type="text/javascript">
+			layui.use(['jquery', 'form'], function() {
+				var $ = layui.$;
+				var form = layui.form;
+
+				$('#email').blur(function() {
+					var account = $('#email').val();
+					if (account.trim() === "") {
+						return;
+					}
+					var url = "http://localhost:8080/api/user/register";
+					$.get(url, {
+						"account": account
+					}, function(result) {
+						if (!result.meta.success) {
+							layer.msg("邮箱已存在", {
+								icon: 5
+							});
+						}
+					});
+				});
+
+				$('#phone').blur(function() {
+					var account = $('#phone').val();
+					if (account.trim() === "") {
+						return;
+					}
+					var url = "http://localhost:8080/api/user/register";
+					$.get(url, {
+						"account": account
+					}, function(result) {
+						if (!result.meta.success) {
+							layer.msg("手机号已存在", {
+								icon: 5
+							});
+						}
+					});
+				});		
+
+				form.verify({
+					nickName: function(value, item) { //value：表单的值、item：表单的DOM对象
+							if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+								return '昵称不能有特殊字符';
+							}
+							if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+								return '昵称首尾不能出现下划线\'_\'';
+							}
+							if (value.length < 4 || value.length > 10) {
+								return '昵称在4到10位之间';
+							}
+							if (/^\d+\d+\d$/.test(value)) {
+								return '昵称不能全为数字';
+							}
+						}
+
+						//我们既支持上述函数式的方式，也支持下述数组的形式
+						//数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+						,
+					pass: [
+						/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
+					],
+					repass: function(value, item) {
+						if (value != $('#password').val()) {
+							return '两次密码输入不同';
+						}
+					},
+					check: function(value, item) {
+						if (!item.checked) {
+							return '请同意用户协议';
+						}
+					}
+				});
+
+				var captcha1 = new TencentCaptcha('2019980495', function(res) {
+					if (res.ret === 0) {
+						$.ajax({
+							url: "http://localhost:8080/api/code/captcha",
+							type: "get",
+							data: {
+								"ticket": res.ticket,
+								"userIp": returnCitySN["cip"],
+								"randstr": res.randstr
+							},
+							success: function(result) {
+								if (result.meta.success) {
+									$.ajax({
+										url: "http://localhost:8080/api/user/register",
+										type: "POST",
+										data: {
+											"email":$('#email').val(),
+											"phone":$('#phone').val(),
+											"nickName":$('#nickName').val(),
+											"password":$('#password').val()
+										},
+										success: function(result) {
+											//根据返回结果作出相应处理
+											if (result.meta.success) {
+												//登录成功
+												// window.location.href = "../index.html";
+												layer.msg("注册成功", {
+													icon: 1,
+													time: 2000,
+													end: function() {
+														window.location.href = "register-success.html?nickName=" + $('#nickName').val();
+													}
+												});
+									
+											} else {
+												layer.msg(result.meta.message, {
+													icon: 5
+												});
+											}
+										}
+									
+									});
+								}
+							}
+						})
+					}
+				});
+
+				//监听提交
+				form.on('submit(zhuce)', function(data) {
+					captcha1.show(); // 显示验证码
+					return false; //注释掉这行代码后，表单将会以普通方式提交表单，否则以ajax方式提交表单
+				});
+			});
+		</script>
+	</body>
+</html>

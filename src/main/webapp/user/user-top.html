@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/user.css" type="text/css" />
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../layui/layui.js"></script>
+		<script type="text/javascript" src="../js/user.js" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="top">
+			<div class="header clearfix">
+				<div class="header_l">
+					<a href="../index.html" target="_top"><img src="../images/userlogo.png" /></a>
+					<h2>会员中心</h2>
+				</div>
+		
+				<div class="header_r">
+					<div class="img_link" id="login_after">
+						欢迎您：<i id="uname"></i>
+						&nbsp;&nbsp;&nbsp;
+						<a href="user-order.html" target="_top">[我的订单]</a>
+						&nbsp;&nbsp;&nbsp;
+						<a href="user-center.html" target="_top">[会员用户中心]</a>
+						&nbsp;&nbsp;&nbsp;
+						<a id="quit" href="javascript:void(0)">[退出登录]</a>
+					</div>
+				</div>
+		
+				<div class="clears"></div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#quit').click(function() {
+					localStorage.clear();
+					top.location.href = "../index.html";
+				});
+			})
+		</script>
+	</body>
+</html>

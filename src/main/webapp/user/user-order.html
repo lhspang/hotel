@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=0.95, user-scalable=no" />
+	<title>黄山醉温泉 - 会员中心</title>
+	<meta name="description" content="说明" />
+	<meta name="keywords" content="关键字" />
+	<link rel="stylesheet" type="text/css" href="../layui/css/layui.css">
+	<link rel="stylesheet" href="../css/user.css" type="text/css" />
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../layui/layui.js"></script>
+	<script type="text/javascript" src="../js/user.js" charset="utf-8"></script>
+	<script type="text/javascript" src="../js/dateTime.js"></script>
+</head>
+
+<body>
+<!--头-->
+<iframe src="user-top.html" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+<!--头-->
+
+<!--会员中心-->
+<div class="member_center_wrap">
+	<div class="member_center clearfix">
+		<div class="member_center_l" style="float: left;">
+			<div class="body_center_main_tree">
+				<ul>
+					<li>
+						<dl>
+							<dt><a href="#" class="cur">会员信息</a></dt>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">订单管理</a></dt>
+							<dd><a href="user-order.html">门店支付订单</a>
+								<a href="user-order.html">在线支付订单</a>
+								<a href="user-order.html">历史酒店订单</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">会员卡管理</a></dt>
+							<dd><a href="#">已买到的会员卡</a>
+								<a href="#">未支付的会员卡</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">套餐卡管理</a></dt>
+							<dd><a href="#">已买到的套餐卡</a>
+								<a href="#">未支付的套餐卡</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">站内消息</a></dt>
+							<dd><a href="#">站内公告</a>
+								<a href="#">会员消息</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">消息管理</a></dt>
+							<dd><a href="#">个人资料管理</a>
+								<a href="#">会员卡管理</a>
+								<a href="#">常用联系人</a>
+								<a href="user-changepass.html">修改密码</a>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<dl>
+							<dt><a href="#">瑞琪酒店社区</a></dt>
+							<dd><a href="#">会员公告</a>
+								<a href="#">会员分享</a>
+								<a href="#">会员建议</a>
+								<a href="#">会员投诉</a>
+								<a href="#">公司会员手册</a>
+								<a href="#">个人会员手册</a>
+							</dd>
+						</dl>
+					</li>
+
+				</ul>
+			</div>
+		</div>
+		<div class="member_center_r">
+			<div class="center_main1">
+				<div class="center_main_tab1">
+					<span>订单管理信息</span>
+				</div>
+
+				<div class="center_main_table">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" class="m9" id="asdf">
+						<tr class="tr1">
+							<td width="30%" align="center">房型信息</td>
+							<td width="20%" align="center">订单编号</td>
+							<td width="10%" align="center">价格</td>
+							<td width="5%" align="center">数量</td>
+							<td width="10%" align="center">预订人</td>
+							<td width="10%" align="center">下单时间</td>
+							<td width="15%" align="center">操作</td>
+
+						</tr>
+						<!-- <tr onmouseover="this.bgColor='#f2fbff'" onmouseout="this.bgColor='#ffffff'">
+                            <td align="left" valign="center">
+                                <div class="ipl"><img src="#" width="90" height="90" border="0" /></div>
+                                <div class="ip2" style="margin-top: 35px;margin-left: 10px;">
+                                    <p class="tit2 ellispsis"><strong>商务大床房</strong></p>
+                                </div>
+                            </td>
+                            <td width="9%" align="center">
+                                <span class="orange1"><strong>E11579605581504</strong></span>
+                            </td>
+                            <td width="9%" align="center" valign="center">
+                                <p style="text-decoration:line-through;color:Gray">119.00</p>
+                                <b>107.10</b>
+                            </td>
+                            <td width="9%" align="center">
+                                <span class="orange1"><strong>赛赛风</strong></span>
+                            </td>
+                            <td width="13%" align="center">
+                                <a href="edit.aspx?id=174" class="blue1">详细信息</a><br />
+                                <a href="del.aspx?id=174" onclick="return confirm('删除后不可再恢复,您确认要删除?');" class="blue1">删除</a>
+                            </td>
+                        </tr> -->
+
+					</table>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!---尾部-->
+<div class="footer">
+	<div class="link">
+		<div class="copyright">
+			Copyright &copy; 2013 eastreach Co.,Ltd All Rights Reserved. 版权所有&nbsp;&nbsp;阜阳天筑豪生大酒店&nbsp;&nbsp;湘ICP备0000000
+		</div>
+	</div>
+
+</div>
+<script type="text/javascript">
+	layui.use(['jquery', 'form'], function() {
+		var $ = layui.$;
+		var form = layui.form;
+		var id = localStorage.getItem("id");
+		var token = localStorage.getItem("token");
+
+		$.ajax({
+			headers: {
+				"Authorization": token
+			},
+			url: "http://localhost:8080/api/order/all",
+			type: "get",
+			data: {
+				"id": id
+			},
+			success: function(result) {
+				if (result.meta.success) {
+					var html = "";
+					$.each(result.data.orders, function(index, item) {
+						html += '<tr onmouseover="this.bgColor=\'#f2fbff\'" onmouseout="this.bgColor=\'#ffffff\'">\n' +
+								'<td align="left" >\n' +
+								'<div class="ipl"><img src="http://localhost:8080' + result.data.roomTypes[index].picture +
+								'" width="90" height="90" border="0"/></div>\n' +
+								'<div class="ip2" >\n' +
+								'<p class="tit2 ellispsis"><strong>' + result.data.roomTypes[index].tName + '</strong></p>\n' +
+								'</div>\n' +
+								'</td>\n' +
+								'<td width="9%" align="center">\n' +
+								'<span class="orange1"><strong>' + item.oId + '</strong></span>\n' +
+								'</td>\n' +
+								'<td width="9%" align="center" valign="center">\n' +
+								'<p style="text-decoration:line-through;color:Gray">' + item.totalPrice * 1.5 + '</p>\n' +
+								'<b>' + item.totalPrice + '</b>\n' +
+								'</td>\n' +
+								'<td width="9%" align="center">\n' +
+								'<span class="orange1"><strong>' + item.totalNum + '</strong></span>\n' +
+								'</td>\n' +
+								'<td width="9%" align="center">\n' +
+								'<span class="orange1"><strong>' + item.uname + '</strong></span>\n' +
+								'</td>\n' +
+								'<td width="13%" align="center">\n' +
+								'<span class="orange1"><strong>' +dateFormat("YYYY-mm-dd HH:MM:SS",new Date(item.oTime))  + '</strong></span>\n' +
+								'</td>\n' +
+								'<td width="13%" align="center">\n' +
+								'<a href="user-orderinfo.html?oId=' + item.oId + '" class="blue1">详细信息</a><br/>\n' +
+								'<a href="#" onclick="return confirm(\'删除后不可再恢复,您确认要删除?\');" class="blue1">删除</a>\n' +
+								'</td>\n' +
+								'</tr>';
+					});
+					$('#asdf').append(html);
+				} else {
+					layer.msg(result.meta.message, {
+						icon: 5
+					})
+				}
+			}
+		})
+
+	})
+</script>
+</body>
+</html>

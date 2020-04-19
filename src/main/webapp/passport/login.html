@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=0.95, user-scalable=no" />
+		<title>新用户登录</title>
+		<meta name="description" content="说明" />
+		<meta name="keywords" content="关键字" />
+		<link rel="stylesheet" href="../css/login.css" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="../layui/css/layui.css">
+		<script type="text/javascript" src="../js/jquery.js"></script>
+		<script type="text/javascript" src="../js/base.js"></script>
+		<script type="text/javascript" src="../layui/layui.js"></script>
+		<script type="text/javascript" src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+		<script type="text/javascript" src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	</head>
+
+	<body>
+		<!--HEADER-->
+		<iframe src="../top.html" width="100%" height="100%" frameborder="0" scrolling="no"></iframe>
+		<!--HEADER-->
+
+		<!--身-->
+		<div class="container_wrap">
+			<div class="container">
+				<!--左-->
+				<div class="container_l">
+					<h1>用户登录</h1>
+					<div class="form_list">
+						<form class="layui-form" action="http://localhost:8080/api/user/login" method="post">
+							<ul>
+								<li class="clearfix">
+									<span class="s1">账 号:</span>
+									<span class="s2">
+										<input type="text" id="account" name="account" lay-verify="required" class="valid_ipt" placeholder="手机或邮箱" />
+									</span>
+								</li>
+								<li class="clearfix">
+									<span class="s1">密　码:</span>
+									<span class="s2">
+										<input type="password" id="password" name="password" lay-verify="required" class="valid_ipt" placeholder="请填写密码" />
+									</span>
+								</li>
+							</ul>
+
+							<div class="yes_rule">
+								<input id="rememberMe" name="remember" type="checkbox" lay-skin="primary" value="true" checked title="记住我" />
+							</div>
+							<div class="btn_area clearfix">
+								<button id="sub_btn" lay-submit="" lay-filter="denglu" class="btn1">登 录</button>
+								<a class="a1" href="forget.html">忘记密码？</a>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!--右-->
+				<div class="container_r">
+					<div class="register_right">
+						<h2>注册</h2>
+						<div class="user_ishave">
+							<p>还没有黄山 &middot; 醉温泉会员账号？</p>
+							<p class="p1"><a href="register.html" class="btn2">轻松注册</a></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--尾部-->
+		<div class="footer">
+			Copyright &copy; 2014 黄山 &middot; 醉温泉 All Rights Reserved. 版权所有&nbsp;&nbsp;&nbsp;&nbsp;皖ICP备11009137号
+		</div>
+
+		<script type="text/javascript">
+			layui.use(['jquery', 'form'], function() {
+				var $ = layui.$;
+				var form = layui.form;
+
+				function setCookie(c_name, value, expiredays) {
+					var exdate = new Date();
+					exdate.setDate(exdate.getDate() + expiredays);
+					document.cookie = c_name + "=" + escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()) +
+						";path=/;SameSite";
+				}
+
+				$('#account').blur(function() {
+					var account = $('#account').val();
+					if (account.trim() === "") {
+						return;
+					}
+					//获取cookie字符串
+					var strCookie = document.cookie;
+					//将多cookie切割为多个名/值对
+					var arrCookie = strCookie.split("; ");
+					//遍历cookie数组，处理每个cookie对
+					for (var i = 0; i < arrCookie.length; i++) {
+						var arr = arrCookie[i].split("=");
+						//找到名称为userId的cookie，并返回它的值
+						if (account == arr[0]) {
+							$('#password').val(arr[1]);
+							break;
+						}
+					}
+				});
+
+				var captcha1 = new TencentCaptcha('2019980495', function(res) {
+					if (res.ret === 0) {
+						$.ajax({
+							url: "http://localhost:8080/api/code/captcha",
+							type: "get",
+							data: {
+								"ticket": res.ticket,
+								"userIp": returnCitySN["cip"],
+								"randstr": res.randstr
+							},
+							success: function(result) {
+								if (result.meta.success) {
+									$.ajax({
+										url: "http://localhost:8080/api/user/login",
+										type: "post",
+										data: {
+											"account": $('#account').val(),
+											"password": $('#password').val(),
+											"remember": $('#rememberMe').val()
+										},
+										success: function(result) {
+											//根据返回结果作出相应处理
+											if (result.meta.success) {
+												//登录成功
+												localStorage.setItem("token", result.data.token);
+												localStorage.setItem("id", result.data.id);
+												if (result.data.account != null) {
+													setCookie(result.data.account, result.data.password, 2)
+												}
+												window.location.href = "../index.html";
+											} else {
+												layer.msg("用户名或密码错误", {
+													icon: 5
+												});
+											}
+										}
+									});
+								}
+							}
+						})
+					}
+				});
+
+
+				//监听提交
+				form.on('submit(denglu)', function(data) {
+					captcha1.show(); // 显示验证码
+					return false; //注释掉这行代码后，表单将会以普通方式提交表单，否则以ajax方式提交表单
+				});
+			});
+		</script>
+	</body>
+</html>
