@@ -14,7 +14,7 @@ public class TencentCaptchaUtil {
     public boolean captcha(String ticket, String userIp, String randstr) {
         try {
 
-            Credential cred = new Credential("AKIDrXTBiOnjenlVy4SSQ8aopa5dqoWyC3EA", "ytYx61hANKEtLYYJq6MYVFn7LJ5LYXHm");
+            Credential cred = new Credential("*", "*");
 
             HttpProfile httpProfile = new HttpProfile();
             httpProfile.setEndpoint("captcha.tencentcloudapi.com");
@@ -24,7 +24,7 @@ public class TencentCaptchaUtil {
 
             CaptchaClient client = new CaptchaClient(cred, "ap-beijing", clientProfile);
 
-            String params = "{\"CaptchaType\":9,\"Ticket\":" + ticket + ",\"UserIp\":" + userIp + ",\"Randstr\":" + randstr + ",\"CaptchaAppId\":2019980495,\"AppSecretKey\":\"0WvENXPQdPMhAbh9HCK53KQ**\"}";
+            String params = "{\"CaptchaType\":9,\"Ticket\":" + ticket + ",\"UserIp\":" + userIp + ",\"Randstr\":" + randstr + ",\"CaptchaAppId\":0,\"AppSecretKey\":\"***\"}";
             DescribeCaptchaResultRequest req = DescribeCaptchaResultRequest.fromJsonString(params, DescribeCaptchaResultRequest.class);
 
             DescribeCaptchaResultResponse resp = client.DescribeCaptchaResult(req);
