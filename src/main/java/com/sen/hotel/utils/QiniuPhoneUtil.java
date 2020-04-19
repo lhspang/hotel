@@ -11,8 +11,8 @@ import java.util.Map;
 public class QiniuPhoneUtil {
     public String phoneCode(String phone){
         // 设置需要操作的账号的AK和SK
-        String ACCESS_KEY = "4d2ILVvnJxp_rRf9d6evACyaAIelwT2eca4DVYT8";
-        String SECRET_KEY = "PiFwwD1qDE5Wfs7uJIalrUv5I0jyRUsWiDDTEr9r";
+        String ACCESS_KEY = "*";
+        String SECRET_KEY = "*";
         Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
 
         // 实例化一个SmsManager对象
@@ -22,7 +22,7 @@ public class QiniuPhoneUtil {
         try {
             Map<String,String> map = new HashMap<String, String>();
             map.put("code",phoneCode);
-            Response response = smsManager.sendMessage("1216651306089848832",new String[]{phone},map);
+            Response response = smsManager.sendMessage("*",new String[]{phone},map);
             System.out.println(response);
             return phoneCode;
         } catch (QiniuException e) {
