@@ -14,7 +14,7 @@
     <url>http://api.sensen.fun</url>
 
     <properties>
-        <spring-version>5.1.5.RELEASE</spring-version>
+        <spring-version>5.2.5.RELEASE</spring-version>
     </properties>
 
     <dependencies>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.39</version>
+            <version>8.0.16</version>
         </dependency>
 
         <!--mybatis-->
@@ -115,13 +115,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.8</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>jackson-annotations</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                </exclusion>
-            </exclusions>
+            <version>2.10.0</version>
         </dependency>
 
         <dependency>
